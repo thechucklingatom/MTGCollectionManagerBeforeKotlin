@@ -26,6 +26,8 @@ public class CollectionManagerActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        
+        //// TODO: 12/30/2015 add listview fragment 
     }
 
     @Override
