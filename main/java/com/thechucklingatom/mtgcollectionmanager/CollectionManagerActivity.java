@@ -26,6 +26,13 @@ public class CollectionManagerActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        
+        //add listview fragment
+        if(savedInstanceState == null){
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, new CardAndSetListViewFragment())
+                    .commit();
+        }
     }
 
     @Override
