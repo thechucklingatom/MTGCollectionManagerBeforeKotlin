@@ -27,7 +27,7 @@ public class CollectionManagerActivity extends AppCompatActivity {
             }
         });
         
-        //// TODO: 12/30/2015 add listview fragment
+        //add listview fragment
         if(savedInstanceState == null){
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new CardAndSetListViewFragment())
