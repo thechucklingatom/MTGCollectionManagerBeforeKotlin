@@ -1,14 +1,22 @@
 package com.thechucklingatom.mtgcollectionmanager;
 
 //import android.app.Fragment;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,34 +36,30 @@ public class CardAndSetListViewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
-        //dummy data for test
-        String[] testData = {
-                "Test item1",
-                "Test item2",
-                "Test item3",
-                "Test item4",
-                "Test item5",
-                "Test item6",
-                "Test item7",
-                "Test item8",
-                "Test item9",
-                "Test item10",
-                "Test item11",
-        };
+        Gson gson;
+        List<Set> sets = new ArrayList<>();
 
-        List<String> testList = new ArrayList<>(Arrays.asList(testData));
+        try{
+            DataTest dataTest = new DataTest(new JsonReader(new InputStreamReader(getResources()
+                    .openRawResource(R.raw.all_sets_x), "UTF-8")));
 
-        //array adapter
-        cardAndSets = new ArrayAdapter<>(getActivity(), R.layout.card_and_set_list_view,
-                R.id.textview_cardset, testList);
+            //array adapter
+            cardAndSets = new ArrayAdapter<>(getActivity(), R.layout.card_and_set_list_view,
+                    R.id.textview_cardset, dataTest.getSetList());
 
-        View rootView = inflater.inflate(R.layout.card_and_set_list_view, container, false);
+            View rootView = inflater.inflate(R.layout.card_and_set_list_view, container, false);
 
-        //get the listview and set the adapter
-        ListView listView = (ListView) rootView.findViewById(R.id.listview_cardset);
-        listView.setAdapter(cardAndSets);
+            //get the listview and set the adapter
+            ListView listView = (ListView) rootView.findViewById(R.id.listview_cardset);
+            listView.setAdapter(cardAndSets);
+            return rootView;
 
-        return rootView;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+
     }
 
 }
