@@ -9,7 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-public class CollectionManagerActivity extends AppCompatActivity {
+public class CollectionManagerActivity extends AppCompatActivity implements CardAndSetListViewFragment.Communicator{
 
     private DataTask dataTask;
 
@@ -50,5 +50,10 @@ public class CollectionManagerActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemClicked(int position, String location) {
+
     }
 }

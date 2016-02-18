@@ -1,6 +1,8 @@
 package com.thechucklingatom.mtgcollectionmanager;
 
 //import android.app.Fragment;
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,19 +14,17 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.google.gson.Gson;
-import com.google.gson.stream.JsonReader;
-
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by thechucklingatom on 12/30/2015.
  * @author thechucklingatom
  */
 public class CardAndSetListViewFragment extends Fragment {
+
+    public interface Communicator{
+        public void onItemClicked(int position, String location);
+    }
+
+    private Communicator mCallback;
 
     public ArrayAdapter cardAndSets;
 
@@ -74,6 +74,23 @@ public class CardAndSetListViewFragment extends Fragment {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+
+        Activity activity;
+
+        if(context instanceof Activity){
+            activity = (Activity) context;
+            try {
+                mCallback = (Communicator) activity;
+            } catch (ClassCastException e) {
+                throw new ClassCastException(activity.toString()
+                        + " must implement OnHeadlineSelectedListener");
+            }
+        }
     }
 
 }
