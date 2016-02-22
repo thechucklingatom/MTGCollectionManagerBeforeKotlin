@@ -8,10 +8,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
-public class CollectionManagerActivity extends AppCompatActivity implements CardAndSetListViewFragment.Communicator{
+import com.google.gson.stream.JsonReader;
 
+import java.io.InputStreamReader;
+
+public class CollectionManagerActivity extends AppCompatActivity implements CardAndSetListViewFragment.Communicator,
+                                                    DataTask.Observer{
+
+    private boolean set = true;
     private DataTask dataTask;
+    private ArrayAdapter<String> adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +29,12 @@ public class CollectionManagerActivity extends AppCompatActivity implements Card
         setContentView(R.layout.activity_collection_manager);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        dataTask = new DataTask(this, new JsonReader(
+                                        new InputStreamReader(getResources()
+                                                .openRawResource(R.raw.all_sets_x))));
+
+        dataTask.execute();
 
        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -34,6 +50,7 @@ public class CollectionManagerActivity extends AppCompatActivity implements Card
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new CardAndSetListViewFragment())
                     .commit();
+
         }
     }
 
@@ -53,7 +70,38 @@ public class CollectionManagerActivity extends AppCompatActivity implements Card
     }
 
     @Override
-    public void onItemClicked(int position, String location) {
-
+    public void onItemClicked(int position) {
+        if(set) {
+            dataTask.createCardList(position);
+            adapter.notifyDataSetChanged();
+            set = false;
+        }else{
+            Toast.makeText(this, "Not implemented, please stop clicking!", Toast.LENGTH_SHORT).show();
+        }
     }
+
+    @Override
+    public ArrayAdapter<String> getAdapter() {
+        adapter = new ArrayAdapter<>(this, R.layout.card_and_set_list_view,
+                R.id.textview_cardset, dataTask.getSetList());
+        return adapter;
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(set){
+            Toast.makeText(this, "No further back", Toast.LENGTH_SHORT).show();
+        }else{
+            set = true;
+            dataTask.createSetList();
+            adapter.notifyDataSetChanged();
+        }
+        //super.onBackPressed();
+    }
+
 }

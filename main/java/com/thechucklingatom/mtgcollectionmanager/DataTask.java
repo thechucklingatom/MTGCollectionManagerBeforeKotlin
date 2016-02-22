@@ -3,7 +3,6 @@ package com.thechucklingatom.mtgcollectionmanager;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -22,19 +21,26 @@ import java.util.List;
  * @author thechucklingatom
  * @
  */
-public class DataTask extends AsyncTask<String, Integer, List<String>> {
-    ArrayAdapter<String> adapter;
+public class DataTask extends AsyncTask<Integer, Integer, List<String>> {
     private List<String> setNameList;
     private List<Set> sets;
-    Context context;
+    private List<Card> cards;
+    JsonReader jsonReader;
+    Observer context;
 
-    public DataTask(Context mContext){
-        setNameList = new ArrayList<>();
-        sets = new ArrayList<>();
-        context = mContext;
+    public interface Observer{
+        void notifyDataSetChanged();
     }
 
-    private void createSetList(){
+    public DataTask(Context mContext, JsonReader jsonReader){
+        setNameList = new ArrayList<>();
+        sets = new ArrayList<>();
+        context = (CollectionManagerActivity)mContext;
+        this.jsonReader = jsonReader;
+    }
+
+    protected void createSetList(){
+        setNameList.clear();
         for(int i = 0; i < sets.size(); i++){
             setNameList.add(sets.get(i).getName());
         }
@@ -44,12 +50,21 @@ public class DataTask extends AsyncTask<String, Integer, List<String>> {
         return setNameList;
     }
 
+    protected void createCardList(int position){
+        cards = sets.get(position).getCards();
+        setNameList.clear();
+        for(int i = 0; i < cards.size(); i++){
+            setNameList.add(cards.get(i).getName());
+        }
+    }
+
+    public List<String> getCardList(){
+        return setNameList;
+    }
+
     @Override
-    protected List<String> doInBackground(String... params) {
+    protected List<String> doInBackground(Integer... params) {
         if(params.length == 0){
-            JsonReader jsonReader = new JsonReader(new InputStreamReader(
-                                                            context.getResources()
-                                                        .openRawResource(R.raw.all_sets_x)));
 
             Gson gson = new GsonBuilder().create();
 
@@ -84,10 +99,14 @@ public class DataTask extends AsyncTask<String, Integer, List<String>> {
             }
             createSetList();
             return getSetList();
-        }else if(params.length == 1){
-            //todo make it pull card data based on the list item selected.
         }
 
         return getSetList();
+    }
+
+    @Override
+    protected void onPostExecute(List<String> strings) {
+        super.onPostExecute(strings);
+        context.notifyDataSetChanged();
     }
 }

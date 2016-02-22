@@ -5,12 +5,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -21,7 +23,8 @@ import android.widget.ListView;
 public class CardAndSetListViewFragment extends Fragment {
 
     public interface Communicator{
-        public void onItemClicked(int position, String location);
+        void onItemClicked(int position);
+        ArrayAdapter<String> getAdapter();
     }
 
     private Communicator mCallback;
@@ -36,21 +39,25 @@ public class CardAndSetListViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
         setHasOptionsMenu(true);
-        DataTask dataTask = new DataTask(this.getContext());
-
-        dataTask.execute();
 
         //array adapter
-        cardAndSets = new ArrayAdapter<>(getActivity(), R.layout.card_and_set_list_view,
-                R.id.textview_cardset, dataTask.getSetList());
+        cardAndSets = mCallback.getAdapter();
 
-        dataTask.adapter = cardAndSets;
+        //dataTask.adapter = cardAndSets;
 
         View rootView = inflater.inflate(R.layout.card_and_set_list_view, container, false);
 
         //get the listview and set the adapter
         ListView listView = (ListView) rootView.findViewById(R.id.listview_cardset);
         listView.setAdapter(cardAndSets);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.i("onItemClick: ", "Item clicked " + position);
+                mCallback.onItemClicked(position);
+            }
+        });
         return rootView;
 
     }
