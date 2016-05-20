@@ -2,10 +2,14 @@ package com.thechucklingatom.mtgcollectionmanager;
 
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 /**
  * Created by thechucklingatom on 2/16/2016.
+ *
+ * @author thechucklingatom
  */
-public class Card {
+public class Card implements Serializable{
     private String id;
     private String layout;
     private String name;
