@@ -12,6 +12,8 @@ import com.google.gson.stream.JsonToken;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -52,10 +54,20 @@ public class DataTask extends AsyncTask<Integer, Integer, List<String>> {
 
     protected void createCardList(int position){
         cards = sets.get(position).getCards();
+        Collections.sort(cards, new Comparator<Card>() {
+            @Override
+            public int compare(Card card1, Card card2) {
+                return card1.getName().compareTo(card2.getName());
+            }
+        });
         setNameList.clear();
         for(int i = 0; i < cards.size(); i++){
             setNameList.add(cards.get(i).getName());
         }
+    }
+
+    protected Card getCard(int position){
+        return cards.get(position);
     }
 
     public List<String> getCardList(){

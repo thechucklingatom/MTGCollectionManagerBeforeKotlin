@@ -1,5 +1,6 @@
 package com.thechucklingatom.mtgcollectionmanager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -76,7 +77,9 @@ public class CollectionManagerActivity extends AppCompatActivity implements Card
             adapter.notifyDataSetChanged();
             set = false;
         }else{
-            Toast.makeText(this, "Not implemented, please stop clicking!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, CardView.class);
+            intent.putExtra("card", dataTask.getCard(position));
+            startActivity(intent);
         }
     }
 
