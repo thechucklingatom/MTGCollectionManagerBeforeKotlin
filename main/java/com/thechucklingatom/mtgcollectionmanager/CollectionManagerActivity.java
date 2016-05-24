@@ -16,6 +16,10 @@ import com.google.gson.stream.JsonReader;
 
 import java.io.InputStreamReader;
 
+/**
+ * @link #initialize(Context)
+ */
+
 public class CollectionManagerActivity extends AppCompatActivity implements CardAndSetListViewFragment.Communicator,
                                                     DataTask.Observer{
 
@@ -99,6 +103,7 @@ public class CollectionManagerActivity extends AppCompatActivity implements Card
     public void onBackPressed() {
         if(set){
             Toast.makeText(this, "No further back", Toast.LENGTH_SHORT).show();
+            super.onBackPressed();
         }else{
             set = true;
             dataTask.createSetList();
