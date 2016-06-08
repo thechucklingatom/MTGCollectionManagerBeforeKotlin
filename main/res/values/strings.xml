@@ -9,4 +9,5 @@
     <string name="card_text">Card text</string>
     <string name="power_and_toughness">Power and Toughness</string>
     <string name="card_image">Card image</string>
+    <string name="search_title">Search</string>
 </resources>
