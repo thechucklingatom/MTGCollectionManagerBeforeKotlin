@@ -1,7 +1,5 @@
 package com.thechucklingatom.mtgcollectionmanager;
 
-import org.json.JSONObject;
-
 import java.io.Serializable;
 
 /**
@@ -9,6 +7,7 @@ import java.io.Serializable;
  *
  * @author thechucklingatom
  */
+
 public class Card implements Serializable{
     private String id;
     private String layout;

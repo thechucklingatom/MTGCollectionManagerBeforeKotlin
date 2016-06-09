@@ -6,7 +6,6 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -18,6 +17,7 @@ import java.net.URL;
  * @author thechucklingatom
  *
  */
+
 public class CardImageFetcher extends AsyncTask<Card, Void, Drawable>{
 
     Activity fetchingActivity;
@@ -30,7 +30,8 @@ public class CardImageFetcher extends AsyncTask<Card, Void, Drawable>{
     protected Drawable doInBackground(Card... cards) {
         try{
             String url = "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
-                    cards[0].getMultiverseid() + "&type=card";
+                    cards[0].getMultiverseid() +
+                    "&type=card";
             InputStream inputStream = (InputStream) new URL(url).getContent();
             Log.i("doInBackground: ", "inputStream gotten");
             return Drawable.createFromStream(inputStream, "src name");

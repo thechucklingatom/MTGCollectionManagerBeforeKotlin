@@ -3,14 +3,11 @@ package com.thechucklingatom.mtgcollectionmanager;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
-
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -23,6 +20,7 @@ import java.util.List;
  * @author thechucklingatom
  * @
  */
+
 public class DataTask extends AsyncTask<Integer, Integer, List<String>> {
     private List<String> setNameList;
     private List<Set> sets;
@@ -77,16 +75,13 @@ public class DataTask extends AsyncTask<Integer, Integer, List<String>> {
     @Override
     protected List<String> doInBackground(Integer... params) {
         if(params.length == 0){
-
             Gson gson = new GsonBuilder().create();
 
             //for checking token
             JsonToken jsonToken;
 
             try {
-
                 jsonReader.beginObject();
-
                 jsonReader.nextName();
 
                 while (jsonReader.hasNext() && jsonReader.peek() != JsonToken.END_DOCUMENT) {
@@ -112,7 +107,6 @@ public class DataTask extends AsyncTask<Integer, Integer, List<String>> {
             createSetList();
             return getSetList();
         }
-
         return getSetList();
     }
 

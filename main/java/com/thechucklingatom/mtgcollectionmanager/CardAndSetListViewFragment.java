@@ -1,6 +1,5 @@
 package com.thechucklingatom.mtgcollectionmanager;
 
-//import android.app.Fragment;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
@@ -38,14 +37,13 @@ public class CardAndSetListViewFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container,
                              Bundle savedInstanceState){
         setHasOptionsMenu(true);
 
         //array adapter
         cardAndSets = mCallback.getAdapter();
-
-        //dataTask.adapter = cardAndSets;
 
         View rootView = inflater.inflate(R.layout.card_and_set_list_view, container, false);
 
@@ -74,8 +72,10 @@ public class CardAndSetListViewFragment extends Fragment {
 
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
 
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity()
-                .getComponentName()));
+        searchView.setSearchableInfo(searchManager
+                .getSearchableInfo(
+                        getActivity()
+                        .getComponentName()));
     }
 
     @Override
@@ -105,8 +105,8 @@ public class CardAndSetListViewFragment extends Fragment {
             try {
                 mCallback = (Communicator) activity;
             } catch (ClassCastException e) {
-                throw new ClassCastException(activity.toString()
-                        + " must implement OnHeadlineSelectedListener");
+                throw new ClassCastException(activity.toString() +
+                        " must implement OnHeadlineSelectedListener");
             }
         }
     }

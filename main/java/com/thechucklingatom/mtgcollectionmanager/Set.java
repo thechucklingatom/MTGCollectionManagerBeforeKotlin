@@ -4,7 +4,11 @@ import java.util.List;
 
 /**
  * Created by thechucklingatom on 2/16/2016.
+ *
+ * @author thechucklingatom
+ *
  */
+
 public class Set {
     private String name;
     private String code;
