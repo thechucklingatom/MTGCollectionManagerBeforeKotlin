@@ -52,9 +52,9 @@ public class CardView extends AppCompatActivity {
         }
 
         if(displayedCard.getPower() != null && displayedCard.getToughness() != null){
-            String powerAndToughness =  displayedCard.getPower() +
-                    " / " +
-                    displayedCard.getToughness();
+            String powerAndToughness =  displayedCard.getPower()
+                    + " / "
+                    + displayedCard.getToughness();
             textPowerAndToughness.setText(powerAndToughness);
         }else{
             textPowerAndToughness.setText("");

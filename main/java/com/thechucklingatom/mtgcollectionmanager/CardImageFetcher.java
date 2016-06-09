@@ -29,9 +29,9 @@ public class CardImageFetcher extends AsyncTask<Card, Void, Drawable>{
     @Override
     protected Drawable doInBackground(Card... cards) {
         try{
-            String url = "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
-                    cards[0].getMultiverseid() +
-                    "&type=card";
+            String url = "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid="
+                    + cards[0].getMultiverseid()
+                    + "&type=card";
             InputStream inputStream = (InputStream) new URL(url).getContent();
             Log.i("doInBackground: ", "inputStream gotten");
             return Drawable.createFromStream(inputStream, "src name");

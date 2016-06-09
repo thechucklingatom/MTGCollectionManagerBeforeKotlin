@@ -30,15 +30,18 @@ public class CollectionManagerActivity
         setSupportActionBar(toolbar);
 
         dataTask = new DataTask(this, new JsonReader(
-                                        new InputStreamReader(getResources()
+                                        new InputStreamReader(
+                                                getResources()
                                                 .openRawResource(R.raw.all_sets_x))));
 
         dataTask.execute();
         
         //add listview fragment
         if(savedInstanceState == null){
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new CardAndSetListViewFragment())
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.container,
+                            new CardAndSetListViewFragment())
                     .commit();
 
         }
