@@ -29,12 +29,12 @@ public class Card implements Serializable{
     private String power;
     private String toughness;
     private int loyalty;
-    private int multiverseid;
+    private int multiverseID;
     private int[] variations;
     private String imageName;
     private String watermark;
     private String border;
-    private boolean timeshifted;
+    private boolean timeShifted;
     private int hand;
     private int life;
     private boolean reserved;
@@ -201,12 +201,12 @@ public class Card implements Serializable{
         this.loyalty = loyalty;
     }
 
-    public int getMultiverseid() {
-        return multiverseid;
+    public int getMultiverseID() {
+        return multiverseID;
     }
 
-    public void setMultiverseid(int multiverseid) {
-        this.multiverseid = multiverseid;
+    public void setMultiverseID(int multiverseID) {
+        this.multiverseID = multiverseID;
     }
 
     public int[] getVariations() {
@@ -241,12 +241,12 @@ public class Card implements Serializable{
         this.border = border;
     }
 
-    public boolean isTimeshifted() {
-        return timeshifted;
+    public boolean isTimeShifted() {
+        return timeShifted;
     }
 
-    public void setTimeshifted(boolean timeshifted) {
-        this.timeshifted = timeshifted;
+    public void setTimeShifted(boolean timeShifted) {
+        this.timeShifted = timeShifted;
     }
 
     public int getHand() {
