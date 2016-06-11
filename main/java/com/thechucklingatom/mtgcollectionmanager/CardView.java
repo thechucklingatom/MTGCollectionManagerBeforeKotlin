@@ -9,8 +9,7 @@ import android.widget.TextView;
 
 public class CardView extends AppCompatActivity {
 
-    CardImageFetcher imageFetcher = new CardImageFetcher(
-            (ImageView)findViewById(R.id.imageView));
+    CardImageFetcher imageFetcher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +17,9 @@ public class CardView extends AppCompatActivity {
         setContentView(R.layout.activity_card_view);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        imageFetcher = new CardImageFetcher(
+                (ImageView)findViewById(R.id.imageView));
 
         Intent passingIntent = getIntent();
 
