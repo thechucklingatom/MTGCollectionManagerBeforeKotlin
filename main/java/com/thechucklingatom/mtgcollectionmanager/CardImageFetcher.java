@@ -13,10 +13,10 @@ import java.net.URL;
 
 /**
  * Gets the image for a magic card based on its multiverse Id and this link
- * http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=@multiverseId&type=card
- * Main use is to send it a {@link Activity} when created that has an imageView with the
- * id R.id.imageView. Then you call doInBackground. This fetches the image off the main
- * thread and returns the image to the onPostExecute method.
+ * http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=@multiverseId&type=card.
+ * Main use is to send it an {@link ImageView} that you want the card image to appear in.
+ * Then you call doInBackground. This fetches the image off the UI thread and returns the
+ * image to the onPostExecute method.
  *
  * @author thechucklingatom
  *
@@ -24,10 +24,15 @@ import java.net.URL;
 
 public class CardImageFetcher extends AsyncTask<Card, Void, Drawable>{
 
-    Activity fetchingActivity;
+    ImageView displayView;
 
-    public CardImageFetcher(Activity activity){
-        fetchingActivity = activity;
+    /**
+     * Constructor for CardImageFetcher. All it needs is the {@link ImageView} you want the
+     * card image to be displayed inside.
+     * @param imageView The {@link ImageView} you want the card image displayed inside.
+     */
+    public CardImageFetcher(ImageView imageView){
+        displayView = imageView;
     }
 
     /**
@@ -49,13 +54,13 @@ public class CardImageFetcher extends AsyncTask<Card, Void, Drawable>{
                     + cards[0].getMultiverseID()
                     + "&type=card";
             InputStream inputStream = (InputStream) new URL(url).getContent();
-            Log.i("doInBackground: ", "inputStream gotten");
+            Log.i("CardImageFetcher: ", "doInBackground: inputStream gotten");
             return Drawable.createFromStream(inputStream, "src name");
         } catch (MalformedURLException e) {
-            Log.e("fetchImage: ", "Error with URL", e.fillInStackTrace());
+            Log.e("CardImageFetcher: ", "fetchImage: Error with URL", e.fillInStackTrace());
             e.printStackTrace();
         } catch (IOException e) {
-            Log.e("fetchImage: ", "Error reading image", e.fillInStackTrace());
+            Log.e("CardImageFetcher: ", "fetchImage: Error reading image", e.fillInStackTrace());
             e.printStackTrace();
         }
         return null;
@@ -70,13 +75,16 @@ public class CardImageFetcher extends AsyncTask<Card, Void, Drawable>{
      * @param cardImage single image returned from doInBackground can be null
      */
     protected void onPostExecute(Drawable cardImage){
-        Log.i("onPostExecute: ", "post execute");
+        Log.i("CardImageFetcher: ", "onPostExecute");
         if(cardImage != null){
-            Log.i("onPostExecute: ", "non null image");
-            ImageView cardImageView = (ImageView)fetchingActivity.findViewById(R.id.imageView);
-            cardImageView.setImageDrawable(cardImage);
-            cardImageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            cardImageView.setVisibility(View.VISIBLE);
+            Log.i("CardImageFetcher: ", "onPostExecute: non null image");
+            if(displayView != null) {
+                displayView.setImageDrawable(cardImage);
+                displayView.setScaleType(ImageView.ScaleType.FIT_XY);
+                displayView.setVisibility(View.VISIBLE);
+            }else{
+                Log.e("CardImageFetcher: ", "onPostExecute: null view provided");
+            }
         }
     }
 }

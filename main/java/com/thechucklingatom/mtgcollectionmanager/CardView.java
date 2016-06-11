@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class CardView extends AppCompatActivity {
 
-    CardImageFetcher imageFetcher = new CardImageFetcher(this);
+    CardImageFetcher imageFetcher = new CardImageFetcher(
+            (ImageView)findViewById(R.id.imageView));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
