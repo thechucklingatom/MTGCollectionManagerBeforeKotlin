@@ -1,6 +1,5 @@
 package com.thechucklingatom.mtgcollectionmanager;
 
-import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -51,8 +50,10 @@ public class CardImageFetcher extends AsyncTask<Card, Void, Drawable>{
     protected Drawable doInBackground(Card... cards) {
         try{
             String url = "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid="
-                    + cards[0].getMultiverseID()
+                    + cards[0].getMultiverseid()
                     + "&type=card";
+            Log.i("CardImageFetcher: ", "doInBackground: MultiverseId = "
+                    + cards[0].getMultiverseid());
             InputStream inputStream = (InputStream) new URL(url).getContent();
             Log.i("CardImageFetcher: ", "doInBackground: inputStream gotten");
             return Drawable.createFromStream(inputStream, "src name");
