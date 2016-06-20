@@ -19,97 +19,99 @@ import android.widget.SearchView;
 
 /**
  * Created by thechucklingatom on 12/30/2015.
+ *
  * @author thechucklingatom
  */
 public class CardAndSetListViewFragment extends Fragment {
 
-    public interface Communicator{
-        void onItemClicked(int position);
-        ArrayAdapter<String> getAdapter();
-    }
+	public interface Communicator {
+		void onItemClicked(int position);
 
-    private Communicator mCallback;
+		ArrayAdapter<String> getAdapter();
+	}
 
-    public ArrayAdapter cardAndSets;
+	private Communicator mCallback;
 
-    public CardAndSetListViewFragment(){
+	public ArrayAdapter cardAndSets;
 
-    }
+	public CardAndSetListViewFragment() {
 
-    @Override
-    public View onCreateView(LayoutInflater inflater,
-                             ViewGroup container,
-                             Bundle savedInstanceState){
-        setHasOptionsMenu(true);
+	}
 
-        //array adapter
-        cardAndSets = mCallback.getAdapter();
+	@Override
+	public View onCreateView(LayoutInflater inflater,
+							 ViewGroup container,
+							 Bundle savedInstanceState) {
+		setHasOptionsMenu(true);
 
-        View rootView = inflater.inflate(R.layout.card_and_set_list_view, container, false);
+		//array adapter
+		cardAndSets = mCallback.getAdapter();
 
-        //get the listview and set the adapter
-        ListView listView = (ListView) rootView.findViewById(R.id.listview_cardset);
-        listView.setAdapter(cardAndSets);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+		View rootView = inflater.inflate(R.layout.card_and_set_list_view, container, false);
 
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("onItemClick: ", "Item clicked " + position);
-                mCallback.onItemClicked(position);
-            }
-        });
-        return rootView;
+		//get the listview and set the adapter
+		ListView listView = (ListView) rootView.findViewById(R.id.listview_cardset);
+		listView.setAdapter(cardAndSets);
+		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-    }
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				Log.i("onItemClick: ", "Item clicked " + position);
+				mCallback.onItemClicked(position);
+			}
+		});
+		return rootView;
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_collection_manager, menu);
+	}
 
-        // Associate searchable configuration with the SearchView
-        SearchManager searchManager = (SearchManager) getActivity()
-                .getSystemService(Context.SEARCH_SERVICE);
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.menu_collection_manager, menu);
 
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+		// Associate searchable configuration with the SearchView
+		SearchManager searchManager = (SearchManager) getActivity()
+				.getSystemService(Context.SEARCH_SERVICE);
 
-        searchView.setSearchableInfo(searchManager
-                .getSearchableInfo(
-                        getActivity()
-                        .getComponentName()));
-    }
+		SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+		searchView.setSearchableInfo(searchManager
+				.getSearchableInfo(
+						getActivity()
+								.getComponentName()));
+	}
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_refresh) {
-            cardAndSets.notifyDataSetChanged();
-            return true;
-        }
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
 
-        return super.onOptionsItemSelected(item);
-    }
+		//noinspection SimplifiableIfStatement
+		if (id == R.id.action_refresh) {
+			cardAndSets.notifyDataSetChanged();
+			return true;
+		}
 
-    @Override
-    public void onAttach(Context context){
-        super.onAttach(context);
+		return super.onOptionsItemSelected(item);
+	}
 
-        Activity activity;
+	@Override
+	public void onAttach(Context context) {
+		super.onAttach(context);
 
-        if(context instanceof Activity){
-            activity = (Activity) context;
-            try {
-                mCallback = (Communicator) activity;
-            } catch (ClassCastException e) {
-                throw new ClassCastException(activity.toString() +
-                        " must implement OnHeadlineSelectedListener");
-            }
-        }
-    }
+		Activity activity;
+
+		if (context instanceof Activity) {
+			activity = (Activity) context;
+			try {
+				mCallback = (Communicator) activity;
+			} catch (ClassCastException e) {
+				throw new ClassCastException(activity.toString() +
+						" must implement OnHeadlineSelectedListener");
+			}
+		}
+	}
 
 }
 
