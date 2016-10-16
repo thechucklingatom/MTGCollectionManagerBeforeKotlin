@@ -11,8 +11,6 @@ import io.magicthegathering.javasdk.resource.Card;
 
 public class CardView extends AppCompatActivity {
 
-	private CardImageFetcher imageFetcher;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -20,6 +18,7 @@ public class CardView extends AppCompatActivity {
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 
+		CardImageFetcher imageFetcher;
 		imageFetcher = new CardImageFetcher(
 				(ImageView) findViewById(R.id.imageView));
 
