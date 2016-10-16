@@ -19,6 +19,9 @@ import java.util.Map;
  */
 public final class AnalyticsTrackers {
 
+	private final Map<Target, Tracker> mTrackers = new HashMap<>();
+	private final Context mContext;
+
 	public enum Target {
 		APP,
 		// Add more trackers here if you need, and update the code in #get(Target) below
@@ -41,9 +44,6 @@ public final class AnalyticsTrackers {
 
 		return sInstance;
 	}
-
-	private final Map<Target, Tracker> mTrackers = new HashMap<>();
-	private final Context mContext;
 
 	/**
 	 * Don't instantiate directly - use {@link #getInstance()} instead.

@@ -7,9 +7,11 @@ import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import io.magicthegathering.javasdk.resource.Card;
+
 public class CardView extends AppCompatActivity {
 
-	CardImageFetcher imageFetcher;
+	private CardImageFetcher imageFetcher;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

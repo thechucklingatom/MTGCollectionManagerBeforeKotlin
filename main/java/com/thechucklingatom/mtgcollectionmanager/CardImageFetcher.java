@@ -11,6 +11,8 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import io.magicthegathering.javasdk.resource.Card;
+
 /**
  * Gets the image for a magic card based on its multiverse Id and this link
  * http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=@multiverseId&type=card.
@@ -23,7 +25,7 @@ import java.net.URL;
 
 public class CardImageFetcher extends AsyncTask<Card, Void, Drawable> {
 
-	ImageView displayView;
+	private ImageView displayView;
 
 	/**
 	 * Constructor for CardImageFetcher. All it needs is the {@link ImageView} you want the

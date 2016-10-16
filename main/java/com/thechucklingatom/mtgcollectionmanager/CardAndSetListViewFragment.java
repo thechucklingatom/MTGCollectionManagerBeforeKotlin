@@ -24,18 +24,14 @@ import android.widget.SearchView;
  */
 public class CardAndSetListViewFragment extends Fragment {
 
-	public interface Communicator {
-		void onItemClicked(int position);
-
-		ArrayAdapter<String> getAdapter();
-	}
-
 	private Communicator mCallback;
 
 	public ArrayAdapter cardAndSets;
 
-	public CardAndSetListViewFragment() {
+	public interface Communicator {
+		void onItemClicked(int position);
 
+		ArrayAdapter<String> getAdapter();
 	}
 
 	@Override
@@ -52,13 +48,9 @@ public class CardAndSetListViewFragment extends Fragment {
 		//get the listview and set the adapter
 		ListView listView = (ListView) rootView.findViewById(R.id.listview_cardset);
 		listView.setAdapter(cardAndSets);
-		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Log.i("onItemClick: ", "Item clicked " + position);
-				mCallback.onItemClicked(position);
-			}
+		listView.setOnItemClickListener((parent, view, position, id) -> {
+			Log.i("onItemClick: ", "Item clicked " + position);
+			mCallback.onItemClicked(position);
 		});
 		return rootView;
 

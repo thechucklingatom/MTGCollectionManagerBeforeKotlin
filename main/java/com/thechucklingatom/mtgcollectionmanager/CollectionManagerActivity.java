@@ -18,10 +18,8 @@ import java.io.InputStreamReader;
 
 public class CollectionManagerActivity
 		extends AppCompatActivity
-		implements CardAndSetListViewFragment.Communicator,
-		DataTask.Observer {
+		implements CardAndSetListViewFragment.Communicator {
 	private boolean set = true;
-	private DataTask dataTask;
 	private ArrayAdapter<String> adapter;
 
 	@Override
@@ -30,13 +28,6 @@ public class CollectionManagerActivity
 		setContentView(R.layout.activity_collection_manager);
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
-
-		dataTask = new DataTask(this, new JsonReader(
-				new InputStreamReader(
-						getResources()
-								.openRawResource(R.raw.all_sets_x))));
-
-		dataTask.execute();
 
 		//add listview fragment
 		if (savedInstanceState == null) {
@@ -66,43 +57,14 @@ public class CollectionManagerActivity
 
 	@Override
 	public void onItemClicked(int position) {
-		if (set) {
-			dataTask.createCardList(position);
-			adapter.notifyDataSetChanged();
-			set = false;
-		} else {
-			Intent intent = new Intent(this, CardView.class);
-			intent.putExtra("card", dataTask.getCard(position));
-			startActivity(intent);
-		}
 	}
 
 	@Override
 	public ArrayAdapter<String> getAdapter() {
-		adapter = new ArrayAdapter<>(this,
-				R.layout.card_and_set_list_view,
-				R.id.textview_cardset,
-				dataTask.getSetList());
 		return adapter;
 	}
 
 	@Override
-	public void notifyDataSetChanged() {
-		adapter.notifyDataSetChanged();
-	}
-
-	@Override
 	public void onBackPressed() {
-		if (set) {
-			Toast.makeText(this,
-					"No further back",
-					Toast.LENGTH_SHORT)
-					.show();
-			super.onBackPressed();
-		} else {
-			set = true;
-			dataTask.createSetList();
-			adapter.notifyDataSetChanged();
-		}
 	}
 }
